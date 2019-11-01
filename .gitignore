@@ -1,0 +1,10 @@
+# general
+.
+..
+
+# jenkins
+jenkins_home
+
+# env
+.env
+*.env
