@@ -12,7 +12,7 @@ IMAGES=$(docker images -aq)
 for i in $IMAGES
 do
   echo "$i"
-  docker image rmi "$i"
+  docker image rmi $i
 done
 
 docker container prune --force
