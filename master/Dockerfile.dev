@@ -16,4 +16,6 @@ RUN curl -fL -o docker.tgz "https://download.docker.com/linux/static/test/x86_64
 
 RUN curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 
+COPY setup.sh .
+
 USER jenkins
