@@ -3,37 +3,17 @@ FROM jenkins/jenkins:lts
 USER root
 
 # add jenkins user
-#RUN mkdir /home/jenkins && chown jenkins:jenkins /home/jenkins && usermod -d /home/jenkins jenkins
+RUN mkdir /home/jenkins && chown jenkins:jenkins /home/jenkins && usermod -d /home/jenkins jenkins
 
-# install docker
-# https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/debian/
-RUN apt-get update -y \ \
-    && apt-get install -y \
-     apt-transport-https \
-     ca-certificates \
-     curl \
-     gnupg2 \
-     software-properties-common
+# add docker group
+ARG DOCKER_GROUP_ID
+RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} jenkins
 
-# install docker-compose
-# https://docs.docker.com/compose/install/
-RUN curl -fsSL \
-    && https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg \
-    && | apt-key add -
+# install docker, docker-compose
+ENV DOCKER_VERSION 18.09.1
+RUN curl -fL -o docker.tgz "https://download.docker.com/linux/static/test/x86_64/docker-$DOCKER_VERSION.tgz" && \
+    tar --strip-component=1 -xvaf docker.tgz -C /usr/bin
 
-RUN apt-key fingerprint 0EBFCD88 \
-    && add-apt-repository \
-       "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-        $(lsb_release -cs) \
-        stable"
-
-RUN apt-get update \
-    && apt-get install docker-ce -y
-
-RUN curl -L \
-   "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" \
-    -o /usr/local/bin/docker-compose
-   
-RUN chmod +x /usr/local/bin/docker-compose
+RUN curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 
 USER jenkins
