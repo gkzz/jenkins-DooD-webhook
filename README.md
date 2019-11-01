@@ -4,8 +4,8 @@
 
 - Build a Jenkins container as `master cluster`
 ```
-ubuntu@hostname ~/jenkins-DooD-webhook (master) $ git clone 
-ubuntu@hostname ~/jenkins-DooD-webhook (master) $ docker-compose -f docker-compose up -d --build
+ubuntu@hostname ~/jenkins-DooD-webhook (master) $ git clone git@github.com:gkzz/jenkins-DooD-webhook.git
+ubuntu@hostname ~/jenkins-DooD-webhook (master) $ docker-compose up -d --build
 ubuntu@hostname ~/jenkins-DooD-webhook (master) $ docker-compose exec master bash
 root@master:/# cat /var/jenkins_home/secrets/initialAdminPassword
 xxxxxxxxxxxxxxxxxxxxxxxx

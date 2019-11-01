@@ -5,10 +5,6 @@ USER root
 # add jenkins user
 #RUN mkdir /home/jenkins && chown jenkins:jenkins /home/jenkins && usermod -d /home/jenkins jenkins
 
-# add docker group
-ARG DOCKER_GROUP_ID
-RUN groupadd -g ${DOCKER_GROUP_ID} docker && usermod -aG ${DOCKER_GROUP_ID} jenkins
-
 # install docker
 # https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/debian/
 RUN apt-get update -y \ \
